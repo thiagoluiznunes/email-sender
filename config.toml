@@ -1,0 +1,14 @@
+[smtp-produtos]
+"sender" = "produtos@produtos.cartoes.com.br"
+"sender-name" = "ses-temp-local-user"
+"recipient" = "thiago.luiz@lavid.ufpb.br"
+"smtp-user" = "AKIA46XI4MWP6KSXIS7H"
+"smtp-pass" = "BJimWhgnml0i0nQT5TmG8LP1B6zeLqUE/QeQxutSGlEB"
+"config-set"= "default-config-set"
+"host" = "email-smtp.us-east-1.amazonaws.com"
+"port" = 587
+"subject" = "Amazon SES Test (Gomail)"
+"html-body" = "<html><head><title>SES Sample Email</title></head><body><h1>Amazon SES Test Email (Gomail)</h1><p>This email was sent with <a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the <a href='https://github.com/go-gomail/gomail/'>Gomail package</a> for <a href='https://golang.org/'>Go</a>.</p></body></html>"
+"text-body" = "This email was sent with Amazon SES using the Gomail package."
+"tags" = "genre=test,genre2=test2"
+"charset" = "UTF-8"
