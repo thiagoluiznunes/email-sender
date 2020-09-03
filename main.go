@@ -11,7 +11,8 @@ func main() {
 	destinations := []string{
 		"thiago.luiz@lavid.ufpb.br",
 		"tnunes@redventures.com",
-		// "testetsunoda3@gmail.com",
+		"testetsunoda3@gmail.com",
+		"produtos.test.redventures@gmail.com",
 	}
 
 	cfg, err := config.Read()

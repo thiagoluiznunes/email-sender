@@ -22,4 +22,5 @@ type SMTPConfig struct {
 	Abuse      string `mapstructure:"abuse"`
 	ReplyTo    string `mapstructure:"reply-to"`
 	Keywords   string `mapstructure:"keywords"`
+	MIME       string `mapstructure:"mime"`
 }

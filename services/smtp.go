@@ -2,6 +2,10 @@ package services
 
 import (
 	"email-sender/infra/config"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
 
 	"gopkg.in/gomail.v2"
 )
@@ -21,11 +25,16 @@ func (s *Service) SendEmail(destination string) (err error) {
 	// Create a new message.
 	m := gomail.NewMessage()
 
-	// Set the main email part to use HTML.
-	m.SetBody("text/html", s.cfg.HTMLBody)
+	body, err := s.parseHTML()
+	if err != nil {
+		return nil
+	}
 
 	// Set the alternative part to plain text.
-	m.AddAlternative("text/plain", s.cfg.TextBody)
+	m.SetBody("text/plain", s.cfg.TextBody)
+	// Set the main email part to use HTML.
+	// m.AddAlternative("text/html", s.cfg.HTMLBody)
+	m.AddAlternative("text/html", body)
 
 	// Construct the message headers, including a Configuration Set and a Tag.
 	m.SetHeaders(map[string][]string{
@@ -49,4 +58,20 @@ func (s *Service) SendEmail(destination string) (err error) {
 	}
 
 	return nil
+}
+
+func (s *Service) parseHTML() (body string, err error) {
+
+	wd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dat, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", wd, s.cfg.HTMLBody))
+	if err != nil {
+		return body, err
+	}
+	body = string(dat[:])
+
+	return body, nil
 }
