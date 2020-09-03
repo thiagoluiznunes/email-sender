@@ -20,4 +20,6 @@ type SMTPConfig struct {
 	TextBody   string `mapstructure:"text-body"`
 	Tags       string `mapstructure:"tags"`
 	Charset    string `mapstructure:"charset"`
+	Abuse      string `mapstructure:"abuse"`
+	ReplyTo    string `mapstructure:"reply-to"`
 }
