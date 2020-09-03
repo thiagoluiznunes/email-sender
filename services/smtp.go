@@ -29,15 +29,14 @@ func (s *Service) SendEmail(destination string) (err error) {
 
 	// Construct the message headers, including a Configuration Set and a Tag.
 	m.SetHeaders(map[string][]string{
-		"From":    {m.FormatAddress(s.cfg.Sender, s.cfg.SenderName)},
-		"To":      {destination},
-		"Subject": {s.cfg.Subject},
-		// Comment or remove the next line if you are not using a configuration set
+		"From":                    {m.FormatAddress(s.cfg.Sender, s.cfg.SenderName)},
+		"To":                      {destination},
+		"Subject":                 {s.cfg.Subject},
 		"X-SES-CONFIGURATION-SET": {s.cfg.ConfigSet},
-		// Comment or remove the next line if you are not using custom tags
-		"X-SES-MESSAGE-TAGS": {s.cfg.Tags},
-		"X-Report-Abuse-To":  {s.cfg.Abuse},
-		"Reply-To":           {s.cfg.ReplyTo},
+		"X-SES-MESSAGE-TAGS":      {s.cfg.Tags},
+		"X-Report-Abuse-To":       {s.cfg.Abuse},
+		"Reply-To":                {s.cfg.ReplyTo},
+		"Keywords":                {s.cfg.Keywords},
 	})
 
 	// Send the email.

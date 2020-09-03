@@ -9,7 +9,6 @@ type Config struct {
 type SMTPConfig struct {
 	Sender     string `mapstructure:"sender"`
 	SenderName string `mapstructure:"sender-name"`
-	Recipient  string `mapstructure:"recipient"`
 	SMTPUser   string `mapstructure:"smtp-user"`
 	SMTPPass   string `mapstructure:"smtp-pass"`
 	ConfigSet  string `mapstructure:"config-set"`
@@ -22,4 +21,5 @@ type SMTPConfig struct {
 	Charset    string `mapstructure:"charset"`
 	Abuse      string `mapstructure:"abuse"`
 	ReplyTo    string `mapstructure:"reply-to"`
+	Keywords   string `mapstructure:"keywords"`
 }
