@@ -2,17 +2,18 @@ package main
 
 import (
 	"email-sender/infra/config"
+	"email-sender/infra/utils"
 	"email-sender/services"
 	"fmt"
+	"os"
 )
 
 func main() {
 
-	destinations := []string{
-		"thiago.luiz@lavid.ufpb.br",
-		"tnunes@redventures.com",
-		"testetsunoda3@gmail.com",
-		"produtos.test.redventures@gmail.com",
+	destinations, err := utils.ReadCSFile("assets/csv/destinations.csv")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(0)
 	}
 
 	cfg, err := config.Read()
@@ -28,12 +29,4 @@ func main() {
 			fmt.Println(err)
 		}
 	}
-	// list := []string{"testetsunoda@gmail.com"}
-	// for i := range list {
-	// 	destinations := []*string{
-	// 		aws.String(list[i]),
-	// 	}
-	// 	services.SendEmail(destinations)
-	// }
-	// services.SendEmail2()
 }
