@@ -9,17 +9,23 @@ import (
 
 // Service represents smpt service
 type Service struct {
-	cfg config.SMTPConfig
+	cfg    config.SMTPConfig
+	dialer *gomail.Dialer
 }
 
 // NewSMPTService return a smpt service reference
 func NewSMPTService(config config.SMTPConfig) *Service {
-	return &Service{cfg: config}
+
+	dialer := gomail.NewPlainDialer(config.Host, config.Port, config.SMTPUser, config.SMTPPass)
+
+	return &Service{
+		cfg:    config,
+		dialer: dialer,
+	}
 }
 
-// SendEmail execute a SMPT call
-func (s *Service) SendEmail(destination string) (err error) {
-	// Create a new message.
+// SendEmail send email using smtp service
+func (s *Service) SendEmail(email string) (err error) {
 	m := gomail.NewMessage()
 
 	body, err := utils.ParseHTML(s.cfg.HTMLBody)
@@ -35,7 +41,7 @@ func (s *Service) SendEmail(destination string) (err error) {
 	// Construct the message headers, including a Configuration Set and a Tag.
 	m.SetHeaders(map[string][]string{
 		"From":                    {m.FormatAddress(s.cfg.Sender, s.cfg.SenderName)},
-		"To":                      {destination},
+		"To":                      {email},
 		"Subject":                 {s.cfg.Subject},
 		"X-SES-CONFIGURATION-SET": {s.cfg.ConfigSet},
 		"X-SES-MESSAGE-TAGS":      {s.cfg.Tags},
@@ -44,12 +50,7 @@ func (s *Service) SendEmail(destination string) (err error) {
 		"Keywords":                {s.cfg.Keywords},
 	})
 
-	// Send the email.
-	d := gomail.NewPlainDialer(s.cfg.Host, s.cfg.Port, s.cfg.SMTPUser, s.cfg.SMTPPass)
-
-	// Display an error message if something goes wrong; otherwise,
-	// display a message confirming that the message was sent.
-	if err := d.DialAndSend(m); err != nil {
+	if err := s.dialer.DialAndSend(m); err != nil {
 		return err
 	}
 

@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	destinations, err := utils.ReadCSFile("assets/csv/destinations.csv")
+	destinations, err := utils.ReadCSFile("assets/csv/test-santander.csv")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
@@ -23,10 +23,11 @@ func main() {
 
 	// instance a SMPT service
 	smptService := services.NewSMPTService(cfg.SMTPProdutos)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	for _, email := range destinations {
-		err = smptService.SendEmail(email)
-		if err != nil {
-			fmt.Println(err)
-		}
+		smptService.SendEmail(email)
 	}
 }
